@@ -1,0 +1,24 @@
+<%= form_tag bulk_update_events_path do %>
+<ul>
+<% @events.each do |event| %>
+	<li>
+		<%= check_box_tag "ids[]", event.id, false %>
+		<%= event.name %>
+	<%= link_to event.name, event_path(event) %>
+	<%= link_to " (XML)", event_path(event, :format => :xml) %>
+	<%= link_to " (JSON)", event_path(event, :format => :json) %>
+	<%= link_to 'Edit', edit_event_path(event) %>
+	<%= link_to 'attendees', event_attendees_path(event) %>
+	<%= link_to 'location', event_location_path(event) %>
+	<%= button_to 'Delete', event_path(event), :method => :delete, :data => {:confirm => "Are you sure?"} %>
+	</li>
+<% end %>
+</ul>
+
+<%= submit_tag "Delete" %>
+<%= submit_tag "Publish" %>
+
+<%= link_to 'New Event', new_event_path %>
+<%= link_to "Atom feed", events_path(:format => :atom) %>
+<%= paginate @events %>
+<% end %>
